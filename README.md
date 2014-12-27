@@ -1,2 +1,3 @@
-VLOBBY_Network
+VLOBBY Network
 ==============
+##### Stage: PRE-ALPHA  
