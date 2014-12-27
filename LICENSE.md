@@ -3,4 +3,5 @@ Copyright (c) 2014 http://vlobby.net/ & https://github.com/vasil7112/VLOBBY_Netw
 This Project is Licensed under **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License**.
 
 To read more about this License please visit: https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
+
 To read a quick summary of the License please visit: https://creativecommons.org/licenses/by-nc-nd/4.0/
