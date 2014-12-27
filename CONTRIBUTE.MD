@@ -7,78 +7,30 @@ Its great to have you here. Here are a few ways you can help make this project b
 The core team members of this project are:
 * Vasilis Dimitriadis (vasil7112)
 
-## Learn & listen
+## Adding new features or upgrading the code
 
-This section includes ways to get started with your open source project. Include links to documentation and to different communication channels: 
+We provide no limitations on this.
 
-* Mailing list: 
-* IRC channel:  
-* Blog:         
-* Anything else:  
-
-## Adding new features
-
-This section includes advice on how to build new features for the project & what kind of process it includes. 
-
-* This is how we like people to add new features:         
-* Here are some specifics on the coding style we prefer:   
-* This is how you send your pull request:                  
-* You should include the following tests:                  
-* These are the updates we hope you make to the changelog: 
-
-Don’t get discouraged! We estimate that the response time from the
-maintainers is around: 
-
-# Bug triage
-
-This sections explains how bug triaging is done for your project. Help beginners by including examples to good bug reports and providing them questions they should look to answer. 
-
-* You can help report bugs by filing them here: 
-* You can look through the existing bugs here: 
-
-* Look at existing bugs and help us understand if
-** The bug is reproducible? Is it reproducible in other environments (browsers)? What are the steps to reproduce? 
-
-* You can close fixed bugs by testing old tickets to see if they are
-happening
-* You can update our change log here
-* You can remove duplicate bug reports
-
+If you are a developer, feel free to have a look around the project, understand how it works and even provide new features or upgrade our current code to make it more performance effiecient.
 
 # Beta testing
 
-This section explains if your project needs beta testing. Explain why early releases require heavy testing and how they can help with specially across browsers and on different hardware. 
-
-* For our project you can find the roadmap and features that require
-testing from here: 
+Our project is currently on its PRE-ALPHA stage. Although there are not alot things to test, you can at any time visit http://vlobby.net which contains the latest updates of VLOBBY_NETWORK and BETA-TEST it by just browsing the page.
 
 # Translations
 
-This section includes any instructions or translation needs your project has. 
-
-* You can help us translate our project here: 
+We are honored if anyone is willing to translate this project to another language. Unfortunatly though, this project is still at PRE-ALPHA and translations at this stage are "useless" since the content is changing daily
 
 # Documentation
 
-This section includes any help you need with the documentation and where it can be found. Code needs explanation, and sometimes those who know the code well have trouble explaining it to someone just getting into it. 
-
-* Help us with documentation here
+Currently there is no Documentation on how to use this website or how to write your code. You can feel free to write a documentation and send it to us.
 
 # Community 
-This section includes ideas on how non-developers can help with the project. Here's a few examples:
 
-* You can help us answer questions our users have here: 
-* You can help build and design our website here:
-* You can help write blog posts about the project by: 
-* You can help with newsletters and internal communications by: 
+There was never the need to be a Programmer/Developer to help us make VLOBBY_NETWORK better. 
 
-* Create an example of the project in real world by building something or
-showing what others have built. 
-* Write about other people’s projects based on this project. Show how
-it’s used in daily life. Take screenshots and make videos!
+Your ideas, beta-testing and feedback is currently the leading-help of this Project.
 
+# Contribute Rewards.
 
-# Your first bugfix
-This section should help a person get started with their very first bug fix and thinking through the problem.
-
-* If you have further questions, contact: 
+We apprieciate your contribution and we have quite a few nice ideas on how we can reward your contribution. Although we can not promise that this Project will sky-rocket to success, we can guarantee our apprieciation on your contribution of this project!
