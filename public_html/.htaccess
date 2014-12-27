@@ -1,0 +1,13 @@
+Options +FollowSymLinks -MultiViews
+
+RewriteEngine On
+
+# If folder does not exist
+RewriteCond %{REQUEST_FILENAME} !-d
+# and file exist
+RewriteCond %{DOCUMENT_ROOT}/$1\.php -f
+# uncomment the below rule if you want / not optional 
+# otherwise leave as is
+# RewriteRule ^([^/]+)/$ $1.php [L]
+# internally show the content of filename.php
+RewriteRule ^([^/]+)/?$ $1.php [L]
