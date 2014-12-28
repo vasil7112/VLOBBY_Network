@@ -17,7 +17,3 @@ There is no reason to contribute if you do not want to, but i would apprieciate 
 Thanks alot for reading this thread, and i hope for the best.
 
 The project is still at PRE-ALPHA, not alot things have been added and the project won't be finished lightning-fast, but small steps will finally finish it.
-
-Merry Christmas to everybody and i hope that you had a wonderful year.
-
-**** If this is an incorrect forum i would be glad if i get notified before the thread removal.  ****
