@@ -70,13 +70,15 @@ class SweepstakesFactory {
         $PDO = \vlobby\Database\Connect::getInstance();
         $PDO->beginTransaction();
         $STMT = $PDO->prepare('INSERT INTO sweepstakes (steamID, end_date, title, description) 
-                                    VALUES (:STEAMID, :END_DATE, :TITLE, :DESCRIPTION);');
+                                    VALUES (:STEAMID, :END_DATE, :TITLE, :DESCRIPTION);
+                               UPDATE `user_stats` SET `sweepstakes_created` = `sweepstakes_created` + 1 WHERE steamID = :STEAMID;');
         $STMT->bindParam(':STEAMID', $_SESSION['STEAM_steamid'], \PDO::PARAM_INT);
         $STMT->bindParam(':END_DATE', $end_date, \PDO::PARAM_INT);
         $STMT->bindParam(':TITLE', $title, \PDO::PARAM_INT);
         $STMT->bindParam(':DESCRIPTION', $description, \PDO::PARAM_INT);
         $STMT->execute();
         $id = $PDO->lastInsertId();
+        $STMT->closeCursor();
         foreach($itemArray as $itemHash){
             if(strpos($itemHash, '_') !== false){
                 $itemHash = explode('_', $itemHash, 2);
@@ -97,6 +99,19 @@ class SweepstakesFactory {
                                 VALUES
                                     '.$finalItems.';');
         $STMT2->execute();
+        $STMT2->closeCursor();
+        
+        $STMT3 = $PDO->prepare('SELECT `sweepstakes_created` FROM `user_stats` WHERE steamID = :STEAMID LIMIT 1;');
+        $STMT3->bindParam(':STEAMID', $_SESSION['STEAM_steamid'], \PDO::PARAM_INT);
+        $STMT3->execute();
+        $results = $STMT3->fetch();
+        $STMT3->closeCursor();
+        
+        if($results['sweepstakes_created'] == 5){
+            \vlobby\Badges\BadgesManager::assignBadge(3, $_SESSION['STEAM_steamid']);
+        }else if($results['sweepstakes_created'] == 10){
+            \vlobby\Badges\BadgesManager::updateBadge(3, 4, $_SESSION['STEAM_steamid']);
+        }
         $PDO->commit();
         \vlobby\Notifications\NotificationFactory::addNotification($_SESSION['STEAM_steamid'], 'You have made a new sweepstake. <a href="'.\vlobby\THIS_DOMAIN('PLAY').'/sweepstake/'.$id.'">Visit Sweepstake</a>');
         header('Location: '.\vlobby\THIS_DOMAIN('PLAY').'/sweepstake/'.$id);

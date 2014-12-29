@@ -72,27 +72,27 @@ class LotteriesManager {
                                LEFT JOIN `steamInfo` entries 
                                  ON `lotteries_entries`.`steamID` = entries.`steamID`
                                WHERE lottery_id = :ID');
-        $STMT2->bindParam(':ID', $ID, \PDO::PARAM_INT);
+        $STMT2->bindParam(':ID', $result['id'], \PDO::PARAM_INT);
         $STMT2->execute();
         $entriesHTML = '';
         $hasJoined = 0;
         $mySteamID = $_SESSION['STEAM_steamid'];
         while($entry = $STMT2->fetch()){
-            if($entry['steamID'] == $mySteamID){ $hasJoined = 1; }
+            if($entry['steamID'] == $mySteamID){ $hasJoined++; }
             $entriesHTML .= '<img src="'.\vlobby\Generic\SteamFunctions::toSteamAvatarFull($entry['avatar']).'" width="100" height="100"/>';
         }
-        $var = self::$LOTTERY[$result["id"]];
-        $HTML .= '<h2 class="text-center font-PoiretOne nomargin"><a href="'.\vlobby\THIS_DOMAIN.'">Vlobby</a> > <a href="'.\vlobby\THIS_DOMAIN('PLAY').'">Play</a> > <a href="'.\vlobby\THIS_DOMAIN('PLAY').'/lotteries/">Lotteries</a> > '.self::$LOTTERY[$result['id']]['title'].' Lottery</h2>
+        $lottery = self::$LOTTERY[$result['type']];
+        $HTML .= '<h2 class="text-center font-PoiretOne nomargin"><a href="'.\vlobby\THIS_DOMAIN.'">Vlobby</a> > <a href="'.\vlobby\THIS_DOMAIN('PLAY').'">Play</a> > <a href="'.\vlobby\THIS_DOMAIN('PLAY').'/lotteries/">Lotteries</a> > '.$lottery['title'].' Lottery</h2>
                     <div class="row padding-top-30">
                         <div class="col-xs-12 font-PoiretOne">
                             <div class="vlobby-jumbotron jumbotron">
-                                <h3 class="nomargin padding-top-20 nomargin">Buy '.self::$LOTTERY[$result['id']]['title'].' Ticket</h3>
-                                <h4 class="nomargin padding-top-20">Price to enter: '.self::$LOTTERY[$result['id']]['price'].' Coins</h4>
-                                <h4 class="nomargin padding-top-20">Potential reward: '.(self::$LOTTERY[$result['id']]['price'] * (self::$LOTTERY[$result['id']]['max_entries'] - 1)).' Coins</h4>'.
-                                (!empty(self::$LOTTERY[$result['id']]['description']) ? '<h4 class="nomargin padding-top-20">'.self::$LOTTERY[$result['id']]['description'].'</h4>' : '<h4 class="nomargin padding-top-20">'.preg_replace('/@(\w+)/e', '$var["$1"]', self::$defaultSettings['description']).'</h4>');
-                                if($hasJoined == 1){
-                                    $HTML .= '<form role="form" method="post"><input name="action" type="hidden" value="joinLottery"><input name="lottery_id" type="hidden" value="'.$result['id'].'"><button type="submit" class="btn btn-vlobby pull-right margin-right-20 margin-bottom-20" onclick="this.innerHTML = \'Please wait...\';">You have %NUM% '.self::$LOTTERY[$result['id']]['title'].' Tickets</button></form>';}else{
-                                    $HTML .= '<form role="form" method="post"><input name="action" type="hidden" value="joinLottery"><input name="lottery_id" type="hidden" value="'.$result['id'].'"><button type="submit" class="btn btn-vlobby pull-right margin-right-20 margin-bottom-20" onclick="this.innerHTML = \'Please wait...\';">Buy '.self::$LOTTERY[$result['id']]['title'].' Ticket</button></form>';}
+                                <h3 class="nomargin padding-top-20 nomargin">Buy '.$lottery['title'].' Ticket</h3>
+                                <h4 class="nomargin padding-top-20">Price to enter: '.$lottery['price'].' Coins</h4>
+                                <h4 class="nomargin padding-top-20">Potential reward: '.($lottery['price'] * ($lottery['max_entries'] - 1)).' Coins</h4>'.
+                                (!empty($lottery['description']) ? '<h4 class="nomargin padding-top-20">'.$lottery['description'].'</h4>' : '<h4 class="nomargin padding-top-20">'.preg_replace('/@(\w+)/e', '$lottery["$1"]', self::$defaultSettings['description']).'</h4>');
+                                if($hasJoined != 0){
+                                    $HTML .= '<form role="form" method="post"><input name="action" type="hidden" value="joinLottery"><input name="lottery_id" type="hidden" value="'.$result['type'].'"><button type="submit" class="btn btn-vlobby pull-right margin-right-20 margin-bottom-20" onclick="this.innerHTML = \'Please wait...\';">You have '.$hasJoined.' '.$lottery['title'].' Tickets</button></form>';}else{
+                                    $HTML .= '<form role="form" method="post"><input name="action" type="hidden" value="joinLottery"><input name="lottery_id" type="hidden" value="'.$result['type'].'"><button type="submit" class="btn btn-vlobby pull-right margin-right-20 margin-bottom-20" onclick="this.innerHTML = \'Please wait...\';">Buy '.$lottery['title'].' Ticket</button></form>';}
         $HTML .='               <div class="clear-both"></div>
                             </div>
                         </div>
@@ -106,18 +106,17 @@ class LotteriesManager {
         return $HTML;
     }
         
-    public static function enterLottery($LOTTERYID){
-        $LOTTERIESID = array('1', '2', '3', '4', '5', '6');
-        
-        if(in_array($LOTTERYID, $LOTTERIESID)){
+    public static function enterLottery($LOTTERYTYPE){
+        $LOTTERYTYPES = array('1', '2', '3', '4', '5', '6');
+        if(in_array($LOTTERYTYPE, $LOTTERYTYPES)){
             $PDO = \vlobby\Database\Connect::getInstance();
             $PDO->beginTransaction();
             $STMT = $PDO->prepare('SELECT id, type
                                    FROM `lotteries`
-                                   WHERE type = :ID 
+                                   WHERE type = :TYPE
                                    ORDER BY id DESC
                                    LIMIT 1');
-            $STMT->bindParam(':ID', $LOTTERIESID, \PDO::PARAM_INT);
+            $STMT->bindParam(':TYPE', $LOTTERYTYPE, \PDO::PARAM_INT);
             $STMT->execute();
             $result = $STMT->fetch();
             
@@ -127,16 +126,24 @@ class LotteriesManager {
             $STMT2->bindParam(':ID', $result['id'], \PDO::PARAM_INT);
             $STMT2->execute();
             $result2 = $STMT2->fetch(\PDO::FETCH_NUM);
-            
-            if($result2[0] == (self::$LOTTERY[$result['id']]['max_entries'] - 1)){
+
+            if($result2[0] == (self::$LOTTERY[$result['type']]['max_entries'] - 1)){
                 $STMT3 = $PDO->prepare('INSERT INTO `lotteries_entries` (steamID, lottery_id) VALUES (:STEAMID, :ID);
-                                        UPDATE `lotteries_entries` SET `winner` = 1 WHERE `lottery_id` = :ID ORDER BY RAND() LIMIT 1;
-                                        INSERT INTO `lotteries` (status, type) VALUES (0, :TYPE);');
+                                        UPDATE `lotteries_entries` SET `winner` = 1 WHERE (`lottery_id` = :ID) ORDER BY RAND() LIMIT 1;
+                                        UPDATE `lotteries` SET `status` = 1 WHERE `id` = :ID;
+                                        INSERT INTO `lotteries` (type) VALUES (:TYPE);');
                 $STMT3->bindParam(':STEAMID', $_SESSION['STEAM_steamid'], \PDO::PARAM_INT);
                 $STMT3->bindParam(':ID', $result['id'], \PDO::PARAM_INT);
                 $STMT3->bindParam(':TYPE', $result['type'], \PDO::PARAM_INT);
                 $STMT3->execute();
+                $STMT3->closeCursor();
+            }else{
+                $STMT3 = $PDO->prepare('INSERT INTO `lotteries_entries` (steamID, lottery_id) VALUES (:STEAMID, :ID);');
+                $STMT3->bindParam(':STEAMID', $_SESSION['STEAM_steamid'], \PDO::PARAM_INT);
+                $STMT3->bindParam(':ID', $result['id'], \PDO::PARAM_INT);
+                $STMT3->execute();
             }
+            $PDO->commit();
         }
     }
 }
