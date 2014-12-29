@@ -32,4 +32,13 @@ class BadgesManager {
         $STMT->bindParam(':BADGEID', $badgeID, \PDO::PARAM_INT);
         $STMT->execute();
     }
+    
+    public static function updateBadge($badgeID, $newBadgeID, $steamID){
+        $PDO = \vlobby\Database\Connect::getInstance();
+        $STMT = $PDO->prepare('UPDATE `badges_assigned` SET `badge_id` = :NEWBADGEID WHERE (`steamID` = :STEAMID AND `badge_id` = :BADGEID)');
+        $STMT->bindParam(':STEAMID', $steamID, \PDO::PARAM_INT);
+        $STMT->bindParam(':BADGEID', $badgeID, \PDO::PARAM_INT);
+        $STMT->bindParam(':NEWBADGEID', $newBadgeID, \PDO::PARAM_INT);
+        $STMT->execute();
+    }
 }

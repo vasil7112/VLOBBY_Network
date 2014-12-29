@@ -13,13 +13,13 @@ namespace vlobby{
     $autoload = new Autoload(ROOT.'/', $manifest);
 
     const STEAM_API_KEY = ''; // STEAM API KEY used to access STEAM API FUNCTIONS.
-    const THIS_DOMAIN = 'http://vlobbys.net';
+    const THIS_DOMAIN = 'http://vlobby.net';
     const DOMAIN_NAME = 'vlobby';
     const WEB_TRADE_ENABLED = true;
     const WEB_BET_ENABLED = true;
     const WEB_PLAY_ENABLED = true;
     const WEB_TALK_ENABLED = true;
-    const MAINTENANCE_ENABLED = true;
+    const MAINTENANCE_ENABLED = false;
     
     function loadClass($class){
         require_once('codebase/'.$class.'.class.php');

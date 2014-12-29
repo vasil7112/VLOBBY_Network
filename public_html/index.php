@@ -13,7 +13,7 @@ $Template->setPageContent('<div class="vlobby-contents">
                                     <strong>Bets</strong> and more. 
                                 </div>
                                 <div class="col-xs-12 col-sm-5 col-md-5">
-                                    <h4 class="text-center font-PoiretOne">SPONSORS:</h4>
+                                    <h4 class="text-center font-PoiretOne">COMMUNITY: (Examples...)</h4>
                                     <div class="vlobby-jumbotron jumbotron nopadding">
                                         <div id="sponsor-carousel" class="carousel slide" data-ride="carousel" data-interval="2000">
                                             <div class="carousel-inner">

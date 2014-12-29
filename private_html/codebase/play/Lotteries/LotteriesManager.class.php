@@ -13,31 +13,31 @@ class LotteriesManager {
                                      ],
                                 2 => [
                                         'title' => 'Bronze',
-                                        'description' => 'This is an example <strong>desc</strong> about Lotteries.',
+                                        //'description' => 'This is an example <strong>desc</strong> about Lotteries.',
                                         'price' => 15,
                                         'max_entries' => 25
                                      ],
                                 3 => [
                                         'title' => 'Copper',
-                                        'description' => 'This is an example <strong>desc</strong> about Lotteries.',
+                                        //'description' => 'This is an example <strong>desc</strong> about Lotteries.',
                                         'price' => 20,
                                         'max_entries' => 25
                                      ],
                                 4 => [
                                         'title' => 'Silver',
-                                        'description' => 'This is an example <strong>desc</strong> about Lotteries.',
+                                        //'description' => 'This is an example <strong>desc</strong> about Lotteries.',
                                         'price' => 30,
                                         'max_entries' => 25
                                      ],
                                 5 => [
                                         'title' => 'Gold',
-                                        'description' => 'This is an example <strong>desc</strong> about Lotteries.',
+                                        //'description' => 'This is an example <strong>desc</strong> about Lotteries.',
                                         'price' => 40,
                                         'max_entries' => 25
                                      ],
                                 6 => [
                                         'title' => 'Jackpot',
-                                        'description' => 'This is an example <strong>desc</strong> about Lotteries.',
+                                        //'description' => 'This is an example <strong>desc</strong> about Lotteries.',
                                         'price' => 5,
                                         'max_entries' => 250
                                      ]
@@ -63,7 +63,17 @@ class LotteriesManager {
                         <h3 class="text-center font-PoiretOne nomargin">This lottery does not exist.</h3>
                     </div>';
         }
+        $lottery = self::$LOTTERY[$result['type']];
         
+        $STMT1 = $PDO->prepare('SELECT `points`
+                                FROM `user`
+                                WHERE `steamID` = :STEAMID
+                                LIMIT 1;');
+        $STMT1->bindParam(':STEAMID', $_SESSION['STEAM_steamid'], \PDO::PARAM_INT);
+        $STMT1->execute();
+        $getPoints = $STMT1->fetch();
+        $getPoints = $getPoints['points'] - $lottery['price'];
+            
         $STMT2 = $PDO->prepare('SELECT entries.`avatar`,
                                        entries.`personaname`,
                                       `lotteries_entries`.`steamID`,
@@ -81,7 +91,7 @@ class LotteriesManager {
             if($entry['steamID'] == $mySteamID){ $hasJoined++; }
             $entriesHTML .= '<img src="'.\vlobby\Generic\SteamFunctions::toSteamAvatarFull($entry['avatar']).'" width="100" height="100"/>';
         }
-        $lottery = self::$LOTTERY[$result['type']];
+        
         $HTML .= '<h2 class="text-center font-PoiretOne nomargin"><a href="'.\vlobby\THIS_DOMAIN.'">Vlobby</a> > <a href="'.\vlobby\THIS_DOMAIN('PLAY').'">Play</a> > <a href="'.\vlobby\THIS_DOMAIN('PLAY').'/lotteries/">Lotteries</a> > '.$lottery['title'].' Lottery</h2>
                     <div class="row padding-top-30">
                         <div class="col-xs-12 font-PoiretOne">
@@ -90,9 +100,10 @@ class LotteriesManager {
                                 <h4 class="nomargin padding-top-20">Price to enter: '.$lottery['price'].' Coins</h4>
                                 <h4 class="nomargin padding-top-20">Potential reward: '.($lottery['price'] * ($lottery['max_entries'] - 1)).' Coins</h4>'.
                                 (!empty($lottery['description']) ? '<h4 class="nomargin padding-top-20">'.$lottery['description'].'</h4>' : '<h4 class="nomargin padding-top-20">'.preg_replace('/@(\w+)/e', '$lottery["$1"]', self::$defaultSettings['description']).'</h4>');
+        $HTML .=                ($getPoints < 0 ? '<div class="pull-right margin-right-20 margin-bottom-20">You don\'t have enough points.</div><div class="clear-both"></div>' : '');
                                 if($hasJoined != 0){
-                                    $HTML .= '<form role="form" method="post"><input name="action" type="hidden" value="joinLottery"><input name="lottery_id" type="hidden" value="'.$result['type'].'"><button type="submit" class="btn btn-vlobby pull-right margin-right-20 margin-bottom-20" onclick="this.innerHTML = \'Please wait...\';">You have '.$hasJoined.' '.$lottery['title'].' Tickets</button></form>';}else{
-                                    $HTML .= '<form role="form" method="post"><input name="action" type="hidden" value="joinLottery"><input name="lottery_id" type="hidden" value="'.$result['type'].'"><button type="submit" class="btn btn-vlobby pull-right margin-right-20 margin-bottom-20" onclick="this.innerHTML = \'Please wait...\';">Buy '.$lottery['title'].' Ticket</button></form>';}
+                                    $HTML .= '<form role="form" method="post"><input name="action" type="hidden" value="joinLottery"><input name="lottery_id" type="hidden" value="'.$result['type'].'"><button type="submit" class="btn btn-vlobby pull-right margin-right-20 margin-bottom-20" onclick="this.innerHTML = \'Please wait...\';" '.($getPoints < 0 ? 'disabled' : '').'>You have '.$hasJoined.' '.$lottery['title'].' Tickets</button></form>';}else{
+                                    $HTML .= '<form role="form" method="post"><input name="action" type="hidden" value="joinLottery"><input name="lottery_id" type="hidden" value="'.$result['type'].'"><button type="submit" class="btn btn-vlobby pull-right margin-right-20 margin-bottom-20" onclick="this.innerHTML = \'Please wait...\';" '.($getPoints < 0 ? 'disabled' : '').'>Buy '.$lottery['title'].' Ticket</button></form>';}
         $HTML .='               <div class="clear-both"></div>
                             </div>
                         </div>
@@ -111,6 +122,17 @@ class LotteriesManager {
         if(in_array($LOTTERYTYPE, $LOTTERYTYPES)){
             $PDO = \vlobby\Database\Connect::getInstance();
             $PDO->beginTransaction();
+            $STMT1 = $PDO->prepare('SELECT points
+                                   FROM `user`
+                                   WHERE `steamID` = :STEAMID
+                                   LIMIT 1;');
+            $STMT1->bindParam(':STEAMID', $_SESSION['STEAM_steamid'], \PDO::PARAM_INT);
+            $STMT1->execute();
+            $getPoints = $STMT1->fetch();
+            if($getPoints['points'] -  self::$LOTTERY[$LOTTERYTYPE]['price'] < 0){
+                return false;
+            }
+            
             $STMT = $PDO->prepare('SELECT id, type
                                    FROM `lotteries`
                                    WHERE type = :TYPE
@@ -129,6 +151,7 @@ class LotteriesManager {
 
             if($result2[0] == (self::$LOTTERY[$result['type']]['max_entries'] - 1)){
                 $STMT3 = $PDO->prepare('INSERT INTO `lotteries_entries` (steamID, lottery_id) VALUES (:STEAMID, :ID);
+                                        UPDATE `user` SET (`points` = `points` - :POINTS) WHERE `steamID` = :STEAMID;
                                         UPDATE `lotteries_entries` SET `winner` = 1 WHERE (`lottery_id` = :ID) ORDER BY RAND() LIMIT 1;
                                         UPDATE `lotteries` SET `status` = 1 WHERE `id` = :ID;
                                         INSERT INTO `lotteries` (type) VALUES (:TYPE);');
@@ -138,10 +161,13 @@ class LotteriesManager {
                 $STMT3->execute();
                 $STMT3->closeCursor();
             }else{
-                $STMT3 = $PDO->prepare('INSERT INTO `lotteries_entries` (steamID, lottery_id) VALUES (:STEAMID, :ID);');
+                $STMT3 = $PDO->prepare('INSERT INTO `lotteries_entries` (steamID, lottery_id) VALUES (:STEAMID, :ID);
+                                        UPDATE `user` SET `points` = (`points` - :POINTS) WHERE `steamID` = :STEAMID;');
                 $STMT3->bindParam(':STEAMID', $_SESSION['STEAM_steamid'], \PDO::PARAM_INT);
                 $STMT3->bindParam(':ID', $result['id'], \PDO::PARAM_INT);
+                $STMT3->bindParam(':POINTS', self::$LOTTERY[$result['type']]['price'], \PDO::PARAM_INT);
                 $STMT3->execute();
+                $STMT3->closeCursor();
             }
             $PDO->commit();
         }

@@ -5,8 +5,8 @@ $Template->setPageTitle('Lottery');
 $Template->setRequireLogin(true);
 
 if(isset($_POST['action']) && $_POST['action']=='joinLottery'){
-    if(isset($_POST['sweepstake_id'])){
-        //\vlobby\play\Sweepstakes\SweepstakesFactory::joinSweepstake($_POST['sweepstake_id']);
+    if(isset($_POST['lottery_id'])){
+        \vlobby\play\Lotteries\LotteriesManager::enterLottery($_POST['lottery_id']);
     }
 }
 
@@ -52,46 +52,4 @@ if(isset($_GET['st']) && !empty($_GET['st'])){
                                 </div>
                                </div>');
 }
-$Template->addJS('$(".sweepstake-item").tooltip({
-                    html: true,
-                    placement: "top",
-                    trigger: "hover",
-                    title: function () {
-                        return $(this).data("market_hash_name");
-                    }
-                 });
-                 $(".invloader").click(function(){
-                    var invloader = $(this);
-                    invloader.html("Loading inventory....");
-                    $.ajax({
-                        type: "POST",
-                        url: "/proxy",
-                        data: { loc: "base", path: "/api/VlobbyUser/getUserBackpack/v001/?&steamid='.$_SESSION['STEAM_steamid'].'&appid="+invloader.data("appid") }
-                    }).done(function( msg ) {
-                        $("#"+invloader.parent().parent().attr("id")+" > .items").html( msg );
-                        invloader.html("Reload inventory");
-                    });
-                });
-
-                 var selectedItems = [];
-                 $("body").on("click", ".sweepstake-item.selectable" , function(){
-                    var clickedItem = $(this);
-                    if(!clickedItem.hasClass("vlobby-item-selected")){
-                        clickedItem.addClass("vlobby-item-selected");
-                        selectedItems.push(clickedItem.data("appid")+"_"+clickedItem.data("itemid"));
-                    }else{
-                        var findItem = selectedItems.indexOf(clickedItem.data("appid")+"_"+clickedItem.data("itemid"));
-                        if (findItem > -1) {
-                            selectedItems.splice(findItem, 1);
-                        }
-                        clickedItem.removeClass("vlobby-item-selected");
-                    }
-                    $("#itemArray").val(JSON.stringify(selectedItems));
-                  });
-                  $("#postsweepstake").submit(function( e ) {
-                    if(selectedItems.length == 0){
-                        $("#errorList").html("Error: No items selected.");
-                        return false;
-                    }
-                  });',false);
 $Template->designTemplate();

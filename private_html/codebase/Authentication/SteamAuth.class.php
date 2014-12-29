@@ -120,6 +120,11 @@ class SteamAuth {
                     $STMT2->bindParam(':PERSONANAME', $player['personaname'], \PDO::PARAM_STR);
                     $STMT2->bindParam(':AVATAR', $player['avatar'], \PDO::PARAM_STR);
                     $STMT2->execute();
+                    
+                    $STMT3 = $PDO->prepare('INSERT IGNORE INTO user_stats (steamID)
+                                            VALUES (:STEAMID)');
+                    $STMT3->bindParam(':STEAMID', $matches[1], \PDO::PARAM_STR);
+                    $STMT3->execute();
                     header('Refresh: 0;');
                     die();
                 }
