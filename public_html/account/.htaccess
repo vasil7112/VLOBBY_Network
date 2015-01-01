@@ -10,5 +10,5 @@ RewriteCond %{DOCUMENT_ROOT}/account/$1\.php -f
 # otherwise leave as is
 # RewriteRule ^([^/]+)/$ $1.php [L]
 # internally show the content of filename.php
-RewriteRule ^([^/]+)/?$ $1.php [L]
-RewriteRule ^view/([0-9]+) viewaccount.php?steamID=$1 
+RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
+RewriteRule ^view/([0-9]+) viewaccount.php?steamID=$1  [L,QSA]

@@ -10,4 +10,4 @@ RewriteCond %{DOCUMENT_ROOT}/$1\.php -f
 # otherwise leave as is
 # RewriteRule ^([^/]+)/$ $1.php [L]
 # internally show the content of filename.php
-RewriteRule ^([^/]+)/?$ $1.php [L]
+RewriteRule ^([^/]+)/?$ $1.php [L,QSA]

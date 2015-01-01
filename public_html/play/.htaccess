@@ -12,6 +12,6 @@ RewriteCond %{DOCUMENT_ROOT}/$1\.php -f
 # otherwise leave as is
 # RewriteRule ^([^/]+)/$ $1.php [L]
 # internally show the content of filename.php
-RewriteRule ^([^/]+)/?$ $1.php [L]
-RewriteRule ^sweepstake/([0-9]+) /sweepstakes?st=$1 [NC,L]
-RewriteRule ^lottery/([0-9]+) /lotteries?st=$1 [NC,L]
+RewriteRule ^([^/]+)/?$ $1.php [L,QSA]
+RewriteRule ^sweepstake/([0-9]+) /sweepstakes?st=$1 [NC,L,QSA]
+RewriteRule ^lottery/([0-9]+) /lotteries?st=$1 [NC,L,QSA]

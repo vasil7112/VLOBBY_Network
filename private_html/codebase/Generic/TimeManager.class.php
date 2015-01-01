@@ -28,16 +28,17 @@ class TimeManager{
     
     public static function endsAt($time){
         $difference = $time - time();
-        $hour = floor($difference / 3600);
-        $min = floor($difference / 60 - $hour * 60);
-        $sec = floor($difference - $hour * 3600 - $min * 60);
+        
+        if($difference <= 0){
+            return 'Finished';
+        }
+        $hour = floor($difference / 3600); // 60
+        $min = floor(($difference / 60) - ($hour * 60)); //43
+        $sec = floor($difference - ($hour * 3600) - ($min * 60)); //54
+        
         if($hour < 10){$hour = "0"+$hour;}
         if($min < 10){$min = "0"+$min;}
         if($sec < 10){$sec = "0"+$sec;}
-        if($difference >= 0){
-            return $hour+"h "+$min+"m "+$sec+"s";
-        }else{
-            return 'Finished';
-        }
+        return $hour."h ".$min."m ".$sec."s";
     }
 }

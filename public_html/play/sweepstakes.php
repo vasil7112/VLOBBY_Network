@@ -64,6 +64,7 @@ if(isset($_GET['st']) && !empty($_GET['st'])){
                                         <ul class="nav nav-pills-vlobby pull-right margin-bottom-20" id="sweepstakesTab" role="tablist">
                                             <li role="presentation" class="active"><a href="#getSweepstakes" aria-controls="getSweepstakes" role="tab" data-toggle="tab">Sweepstakes</a></li>
                                             <li role="presentation"><a href="#createSweepstakes" aria-controls="createSweepstakes" role="tab" data-toggle="tab">Create Sweepstake</a></li>
+                                            <li role="presentation"><a href="#mySweepstakes" aria-controls="mySweepstakes" role="tab" data-toggle="tab">My Sweepstakes</a></li>
                                         </ul>
                                         <div class="clear-both"></div>
                                         <div class="tab-content">
@@ -117,6 +118,9 @@ if(isset($_GET['st']) && !empty($_GET['st'])){
                                                     <div role="tabpanel" class="tab-pane fade in" id="tf2Items"><center><button type="submit" class="pull-right btn btn-vlobby invloader margin-top-30" data-appid="440">Load My Inventory</button></center><div class="items"></div></div>
                                                     <div role="tabpanel" class="tab-pane fade in" id="steamItems"><center><button type="submit" class="pull-right btn btn-vlobby invloader margin-top-30" data-appid="753">Load My Inventory</button></center><div class="items"></div></div>
                                                 </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade in" id="mySweepstakes">
+                                                '.\vlobby\play\Sweepstakes\SweepstakesFactory::getUserSweepstakes($_SESSION['STEAM_steamid']).'
                                             </div>
                                         </div>
                                     </div>

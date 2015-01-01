@@ -166,7 +166,7 @@ class DefaultTemplate{
                                                 <li role="presentation"><a href="'.\vlobby\THIS_DOMAIN.'/account/notifications"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Notifications ('.$NotificationsManager->countUnreadNotifications().')</a></li>
                                                 <li role="presentation"><a href="'.\vlobby\THIS_DOMAIN.'/account/view/'.$_SESSION['STEAM_steamid'].'"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Account</a></li>
                                                 <li role="presentation" class="divider"></li>
-                                                <li role="presentation"><a href="'.\vlobby\THIS_DOMAIN.'/?logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+                                                <li role="presentation"><a href="?logout"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
                                             </ul>
                                         </div>').
                                 '</div>

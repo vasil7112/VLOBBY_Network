@@ -23,7 +23,12 @@ if(!empty($idArray)){
         $sendNotification .= 'INSERT INTO notifications (steamID, notification, color)
                               SELECT `steamID`, \'You are a winner of a sweepstake! <a href="http://play.vlobby.net/sweepstake/'.$id.'">Visit Sweepstake</a>\', \'005A08\'
                               FROM `sweepstakes_entries`
-                              WHERE (`sweepstakes_id` = '.$id.' AND `winner` = 1);';
+                              WHERE (`sweepstakes_id` = '.$id.' AND `winner` = 1);
+                                  
+                              INSERT INTO notifications (steamID, notification, color)
+                              SELECT `steamID`, \'Your sweepstake has finished! <a href="http://play.vlobby.net/sweepstake/'.$id.'">Visit Sweepstake</a>\', \'B5AC26\'
+                              FROM `sweepstakes`
+                              WHERE (`id` = '.$id.');';
     }
     $STMT2 = $PDO->prepare('UPDATE `sweepstakes`
                             SET `sweepstakes`.`status` = 1

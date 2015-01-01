@@ -166,4 +166,49 @@ class SweepstakesFactory {
             $PDO->commit();
         }
     }
+    
+    public static function getUserSweepstakes($STEAMID){
+        $HTML = '';
+        $PDO = \vlobby\Database\Connect::getInstance();
+        $PDO->beginTransaction();
+        $STMT = $PDO->prepare('SELECT id, title, end_date, status FROM `sweepstakes` WHERE steamID = :STEAMID ORDER BY `id` DESC LIMIT 50;');
+        $STMT->bindParam(':STEAMID', $STEAMID, \PDO::PARAM_INT);
+        $STMT->execute();
+        
+        while($sweepstake = $STMT->fetch()){
+            $HTML .= '<tr '.($sweepstake['status']==0?/**'style="background-color:#fff;"'**/'':'').'>
+                        <td>'.$sweepstake['id'].'</td>
+                        <td>'.$sweepstake['title'].'</td>
+                        <td>'. (\vlobby\Generic\TimeManager::endsAt(strtotime($sweepstake['end_date'])) == 'Finished' ? \vlobby\Generic\TimeManager::ago(strtotime($sweepstake['end_date'])) : \vlobby\Generic\TimeManager::endsAt(strtotime($sweepstake['end_date']))).'</td>
+                        <td><a href="'.\vlobby\THIS_DOMAIN('PLAY').'/sweepstake/'.$sweepstake['id'].'">Visit Sweepstake</a></td>
+                      </tr>';
+        }
+        
+        if(empty($HTML)){
+            return 'no!';
+        }else{
+            return '<table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Sweepstake Title</th>
+                                <th>End in</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            '.$HTML.'
+                       </tbody>
+                    </table>';
+        }
+        $PDO->commit();
+    }
+    
+    public static function getTime($time){
+        $datetime1 = new \DateTime();
+        $datetime2 = new \DateTime('@'.$time);
+        $interval = $datetime1->diff($datetime2);
+        $elapsed = $interval->format('%ad %hh %im %Ss');
+        return $elapsed;
+    }
 }
