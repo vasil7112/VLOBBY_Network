@@ -8,9 +8,9 @@ $Template->setPageContent('<div class="vlobby-contents">
                                     <ul class="nav nav-pills nav-stacked">
                                         <li data-selectgametype="all" class="active"><a href="#">All Games</a></li>
                                         <li data-selectgametype="csgo"><a href="#">CSGO Games</a></li>
-                                        <li data-selectgametype="dota"><a href="#">TF2 Games</a></li>
-                                        <li data-selectgametype="gmod"><a href="#">DOTA Games</a></li>
-                                        <li data-selectgametype="tf2"><a href="#">GMOD Games</a></li>
+                                        <li data-selectgametype="tf2"><a href="#">TF2 Games</a></li>
+                                        <li data-selectgametype="dota"><a href="#">DOTA Games</a></li>
+                                        <li data-selectgametype="gmod"><a href="#">GMOD Games</a></li>
                                         <li data-selectgametype="generic"><a href="#">Other Games</a></li>
                                     </ul>
                                 </div>

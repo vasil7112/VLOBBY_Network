@@ -128,7 +128,7 @@ if(isset($_GET['st']) && !empty($_GET['st'])){
                                </div>');
 }
 $Template->addJS('$( document ).ajaxStop( function() {
-                    $(".sweepstake-item").tooltip({
+                    $(".inv-item").tooltip({
                         html: true,
                         placement: "top",
                         trigger: "hover",
@@ -137,7 +137,7 @@ $Template->addJS('$( document ).ajaxStop( function() {
                         }
                     });
                  });
-                 $(".sweepstake-item").tooltip({
+                 $(".inv-item").tooltip({
                     html: true,
                     placement: "top",
                     trigger: "hover",
@@ -159,7 +159,7 @@ $Template->addJS('$( document ).ajaxStop( function() {
                 });
 
                  var selectedItems = [];
-                 $("body").on("click", ".sweepstake-item.selectable" , function(){
+                 $("body").on("click", ".inv-item.selectable" , function(){
                     var clickedItem = $(this);
                     if(!clickedItem.hasClass("vlobby-item-selected")){
                         clickedItem.addClass("vlobby-item-selected");

@@ -92,8 +92,8 @@ class SteamAuth {
                     $_SESSION['STEAM_avatar'] = $player['avatar'];
                     $_SESSION['STEAM_personastate'] = $player['personastate'];
                     //$_SESSION['STEAM_realname'] = $player['realname'];
-                    $_SESSION['STEAM_primaryclanid'] = $player['primaryclanid'];
-                    $_SESSION['STEAM_timecreated'] = $player['timecreated'];
+                    //$_SESSION['STEAM_primaryclanid'] = $player['primaryclanid'];
+                    //$_SESSION['STEAM_timecreated'] = $player['timecreated'];
                     
 
                     $PDO = \vlobby\Database\Connect::getInstance();

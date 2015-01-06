@@ -24,7 +24,7 @@ class Connect {
     
     public static function getInstance(){
         if (!self::$instance){
-            $connector = new Connect();
+            $connector = new self();
             self::$instance = $connector->__connect();
         }
         return self::$instance ;

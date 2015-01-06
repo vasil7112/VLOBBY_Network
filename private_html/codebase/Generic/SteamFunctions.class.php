@@ -54,12 +54,16 @@ class SteamFunctions {
         $HTML = '';
         $gameID = (int) $gameID;
         $content = self::getBackpackJSON($steamID, $gameID, $subID);
+        
+        if($content['success'] == false){
+            return false;
+        }
         $inventory = $content['rgInventory'];
         $descriptions = $content['rgDescriptions'];
         foreach($inventory as $itemid=>$item){
             $description = $descriptions[$item['classid'].'_'.$item['instanceid']] ;
             if($description['tradable'] == 1){
-                $HTML .= '<div rel="tooltip" class="sweepstake-item img-rounded-container selectable" data-appid="'.($fakeID == null ? $gameID : $fakeID).'" data-itemid="'.$itemid.'" data-market_hash_name="'.($gameID != 753 ? $description['market_hash_name'] : $description['name']).'" height="75" width="75" style="background-image:url(\'http://steamcommunity-a.akamaihd.net/economy/image/'.$description['icon_url'].'/96fx96f\');border-color:#000000;color:#0000;"></div>';
+                $HTML .= '<div rel="tooltip" class="inv-item img-rounded-container selectable" data-appid="'.($fakeID == null ? $gameID : $fakeID).'" data-itemid="'.$itemid.'" data-market_hash_name="'.($gameID != 753 ? $description['market_hash_name'] : $description['name']).'" height="75" width="75" style="background-image:url(\'http://steamcommunity-a.akamaihd.net/economy/image/'.$description['icon_url'].'/96fx96f\');border-color:#000000;color:#0000;"></div>';
             }
         }
         return $HTML;

@@ -129,7 +129,7 @@ class DefaultTemplate{
                         <title>' . $this->PAGE_NAME . ' &bull; ' . $this->PAGE_TITLE . '</title>
                         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
                         <link rel="stylesheet" href="' . \vlobby\THIS_DOMAIN.'/assets/css/vlobby.css">
-                        <link rel="shortcut icon" href="https://s.ytimg.com/yts/img/favicon-vfldLzJxy.ico" type="image/x-icon">
+                        <link rel="shortcut icon" href="' . \vlobby\THIS_DOMAIN.'/assets/img/favicon.png' . '" type="image/x-icon">'./**This is just for testing.**/'
                         ' . $this->getCSS() .'
                         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
                         <!-- WARNING: Respond.js doesn\'t work if you view the page via file:// -->

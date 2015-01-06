@@ -66,6 +66,13 @@ class SweepstakesFactory {
                            '753-1' => \vlobby\Generic\SteamFunctions::getBackpackJSON($_SESSION['STEAM_steamid'], 753, 1),
                            '753-3' => \vlobby\Generic\SteamFunctions::getBackpackJSON($_SESSION['STEAM_steamid'], 753, 3),
                            '753-6' => \vlobby\Generic\SteamFunctions::getBackpackJSON($_SESSION['STEAM_steamid'], 753, 6));
+        $isInventoryPrivate = false;
+        foreach($inventory as $inv){
+            if($inv['success'] == false){
+                $isInventoryPrivate = true;
+            }
+        }
+        if($isInventoryPrivate){return;}
         $finalItems = array();
         $PDO = \vlobby\Database\Connect::getInstance();
         $PDO->beginTransaction();
