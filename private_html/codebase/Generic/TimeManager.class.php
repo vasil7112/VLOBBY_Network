@@ -2,7 +2,7 @@
 namespace vlobby\Generic;
 class TimeManager{
     public static function mysqlTime(){
-        return time() + 21600;
+        return time() + 18000;
     }
     
     public static function ago($time){

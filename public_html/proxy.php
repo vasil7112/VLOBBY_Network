@@ -1,5 +1,5 @@
 <?php
-require_once('../../private_html/config.php');
+require_once('../private_html/config.php');
 if(!isset($_POST['loc'], $_POST['path'])){
     die();
 }

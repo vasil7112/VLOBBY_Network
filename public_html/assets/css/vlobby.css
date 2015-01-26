@@ -24,11 +24,17 @@ body{
 .clear-both{ clear: both; }
 .font-PoiretOne{ font-family: 'Poiret One', cursive; }
 .font-big{ font-size: 28px; }
+.font-medium{ font-size: 18px; font-weight: bolder;}
 .font-bold{ font-weight: bold; }
 .relative{ position: relative; }
 .absolute-bottom{ position: absolute; bottom: 0;}
 .full-width{ width: 100%; }
 .color-black{ color: #000; }
+.color-white{ color: #fff; }
+.color-red{ color: #ac2925; }
+.img-center{ margin: 0 auto; }
+.inline-block{ display: inline-block; }
+
 
 .no_selection {
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
@@ -202,14 +208,14 @@ body{
     border-width: 1px;
     border-style: solid;
     border-radius: 5px;
-    background-size: 75px;
+    background-size: 80%;
     background-repeat: no-repeat;
     background-position: center center;
     display: inline-block;
 }
 
 .img-rounded-container:hover{
-    background-size: 90px;
+    background-size: 110%;
 }
 
 .nav-pills-vlobby>li{
@@ -238,6 +244,24 @@ body{
 
 .panel-vlobby > .panel-heading{
     background-color: #1D1D22;
+}
+
+.panel-vlobby .vr{
+    border: 0;
+    float: left;
+    margin-right: 10px;
+    height: 79px;
+    width: 1px;
+    background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:     -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+    background-image:      -o-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+}
+
+.panel-vlobby .btn-j-giveaway{
+    position:absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .btn-vlobby{

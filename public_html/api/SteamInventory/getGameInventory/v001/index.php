@@ -29,7 +29,7 @@ if($_GET['appid'] == '440'){
                 continue;
             }
         }
-        $HTML .= '<div data-tooltip data-title="'.$item['name'].'" data-toggle="popover" class="img-rounded-container gameinv-item" height="75" width="75" style="background-image:url(\''.$item['image_url'].'\');border-color:#000000;"></div>';
+        $HTML .= '<div data-tooltip="" data-appid="730" data-quality="0" data-title="'.$item['name'].'" data-toggle="popover" class="img-rounded-container gameinv-item" height="75" width="75" style="background-image:url(\''.$item['image_url'].'\');border-color:#000000;"></div>';
     }
     echo $HTML;
 }else{

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tres\package_manager {
+namespace Tres\PackageManager {
     
     class Autoload {
         

@@ -9,7 +9,7 @@ class Connect {
         } 
         
         try {
-            $dbh = new \PDO("mysql:host=vlobby.net;dbname=vlobbyne_vlobby", 'username', 'password');
+            $dbh = new \PDO("mysql:host=vlobby.net;dbname=vlobbyne_vlobby", 'vlobbyne_vas', '');
             $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             return $dbh;
         }catch(PDOException $e){

@@ -111,7 +111,7 @@ class SteamAuth {
                         $_SESSION['group'] = 0;
                     }
                     
-                    $STMT2 = $PDO->prepare('INSERT INTO steamInfo (steamID, personaname, avatar)
+                    $STMT2 = $PDO->prepare('INSERT INTO steam_info (steam_id, personaname, avatar)
                                             VALUES (:STEAMID, :PERSONANAME, :AVATAR)
                                             ON DUPLICATE KEY UPDATE
                                                 `personaname` = VALUES(`personaname`),
@@ -121,7 +121,7 @@ class SteamAuth {
                     $STMT2->bindParam(':AVATAR', $player['avatar'], \PDO::PARAM_STR);
                     $STMT2->execute();
                     
-                    $STMT3 = $PDO->prepare('INSERT IGNORE INTO user_stats (steamID)
+                    $STMT3 = $PDO->prepare('INSERT IGNORE INTO user_stats (steam_id)
                                             VALUES (:STEAMID)');
                     $STMT3->bindParam(':STEAMID', $matches[1], \PDO::PARAM_STR);
                     $STMT3->execute();

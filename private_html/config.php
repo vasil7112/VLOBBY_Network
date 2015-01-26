@@ -1,18 +1,19 @@
 <?php
 namespace vlobby{
-    if (!session_id()) { // MUST-HAVE -> Starts the new Session if it doesn't exist. Stores STEAM DATA & PAGE DATA.
+    date_default_timezone_set('EST');
+    if (!session_id()) {
         session_set_cookie_params(0, '/', '.vlobby.net');
         ini_set('session.cookie_domain', '.vlobby.net' );
         session_start();
     }
     
-    use Tres\package_manager\Autoload;
+    use Tres\PackageManager\Autoload;
     define('ROOT', dirname(__DIR__));
-    require_once(ROOT.'/private_html/codebase/package_manager/Autoload.php');
+    require_once(ROOT.'/private_html/codebase/PackageManager/Autoload.php');
     $manifest = require(ROOT.'/private_html/manifest.php');
     $autoload = new Autoload(ROOT.'/', $manifest);
 
-    const STEAM_API_KEY = ''; // STEAM API KEY used to access STEAM API FUNCTIONS.
+    const STEAM_API_KEY = '';
     const THIS_DOMAIN = 'http://vlobby.net';
     const DOMAIN_NAME = 'vlobby';
     const WEB_TRADE_ENABLED = true;
@@ -25,7 +26,7 @@ namespace vlobby{
         require_once('codebase/'.$class.'.class.php');
     }
     
-    function getTemplate($TemplateType){
+    function getTemplate($TemplateType = 'DEFAULT'){
         if(strtoupper($TemplateType)=='DEFAULT'){
             return new \vlobby\Template\DefaultTemplate();
         }

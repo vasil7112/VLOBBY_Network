@@ -1,20 +1,27 @@
 <?php
 require_once('../private_html/config.php');
-$Template = vlobby\getTemplate('DEFAULT');
+$Template = vlobby\getTemplate();
 $Template->setPageTitle('Home');
-$Template->setPageContent('<div class="vlobby-contents">
-                            <h2 class="text-center font-PoiretOne nomargin">Welcome to Vlobby,</h2>
-                            <h3 class="text-center font-PoiretOne nomargin">The Valve Lobby</h3>
+$GiveawaysManager = new \vlobby\Plugins\Giveaways\GiveawaysManager();
+$Template->setPageContent('<div class="vlobby-contents font-PoiretOne">
+                            <h2 class="text-center nomargin">Welcome to Vlobby,</h2>
+                            <h3 class="text-center nomargin">The Valve Lobby</h3>
                             <div class="row">
-                                <div class="col-xs-12 col-sm-7 col-md-7 font-PoiretOne padding-top-30">
-                                    The Vlobby network is a service which allows you to win items that you can use on games such as 
-                                    <strong>CS:GO</strong> and <strong>TF2</strong> by playing on different kinds of <strong>events</strong>.
-                                    Those events include, but are not limited to <strong>Tournamets</strong>, <strong>Raffles</strong>, 
-                                    <strong>Bets</strong> and more. 
+                                <div class="col-xs-12 col-sm-7 col-md-7 padding-top-30 text-center">
+                                    Vlobby Network is expanding, slowly but steady. We are trying to bring you quality content every day and we hope that
+                                    you are enjoying it.
+                                    
+                                    <div class="padding-top-10">
+                                        <a href="'.\vlobby\THIS_DOMAIN.'/creategiveaway" class="inline-block pull-left"><h3>Create Giveaway</h3></a>
+                                        '.(\vlobby\Authentication\SteamAuth::isLoggedIn() ? '<a href="'.\vlobby\THIS_DOMAIN.'/mygiveaways" class="inline-block pull-right"><h3>My Giveaways</h3></a>' : '').'
+                                    </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-5 col-md-5">
-                                    <h4 class="text-center font-PoiretOne">COMMUNITY: (Examples...)</h4>
-                                    <div class="vlobby-jumbotron jumbotron nopadding">
+                                    <h4 class="text-center">Share the Knowledge</h4>
+                                    <center><a href="https://github.com/vasil7112/VLOBBY_Network"><img class="img-center" src="/assets/img/btn-Github.png"/></a></center>
+                                    
+                                    <h4 class="text-center">Or give us a visit at</h4>
+                                    <div class="vlobby-jumbotron jumbotron nopadding margin-top-10">
                                         <div id="sponsor-carousel" class="carousel slide" data-ride="carousel" data-interval="2000">
                                             <div class="carousel-inner">
                                                 <div class="item active">
@@ -30,28 +37,18 @@ $Template->setPageContent('<div class="vlobby-contents">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row padding-top-30">
-                                <div class="col-xs-12 col-sm-3 col-md-3 margin-top-10">
-                                    <div class="center vlobby-jumbotron jumbotron nopadding hoverable" onclick="location.href = \''.\vlobby\THIS_DOMAIN('trade').'\';">
-                                        <center><img src="http://placehold.it/90x90&text=TRADE"/></center>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-3 col-md-3 margin-top-10">
-                                    <div class="center vlobby-jumbotron jumbotron nopadding hoverable" onclick="location.href = \''.\vlobby\THIS_DOMAIN('play').'\';">
-                                        <center><img src="http://placehold.it/90x90&text=PLAY"/></center>
-                                      </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-3 col-md-3 margin-top-10">
-                                    <div class="center vlobby-jumbotron jumbotron nopadding hoverable" onclick="location.href = \'/csgo/weaponbanking\';">
-                                        <center><img src="http://placehold.it/90x90&text=BET"/></center>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-3 col-md-3 margin-top-10">
-                                    <div class="center vlobby-jumbotron jumbotron nopadding hoverable" onclick="location.href = \'/csgo/weaponbanking\';">
-                                        <center><img src="http://placehold.it/90x90&text=TALK"/></center>
-                                    </div>
-                                </div>
-                              </div>
-                             </div>');
+                            <div class="padding-top-30">
+                                '.$GiveawaysManager->getGiveaways().'
+                            </div>
+                          </div>');
+$Template->addJS('$("body").tooltip({
+                    selector: "[rel=tooltip]",
+                    html: true,
+                    placement: "top",
+                    trigger: "hover",
+                    title: function () {
+                        return $(this).data("title");
+                    }
+                 });' ,false);
 $Template->designTemplate();
 ?>

@@ -29,12 +29,6 @@ return array(
     */
     'namespaces' => array(
         'vlobby' => 'private_html/codebase',
-        'vlobby\Template' => 'private_html/codebase/Template',
-        'vlobby\Generic' => 'private_html/codebase/Generic',
-        'vlobby\Authentication' => 'private_html/codebase/Authentication',
-        'vlobby\Notifications' => 'private_html/codebase/Notifications',
-        'vlobby\Badges' => 'private_html/codebase/Badges',
-        'vlobby\play\Sweepstakes' => 'private_html/codebase/play/Sweepstakes',
     ),
     
     /*
